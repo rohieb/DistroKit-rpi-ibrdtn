@@ -1,0 +1,12 @@
+[Unit]
+Description=IBR-DTN Bundle Protocol daemon
+Requires=network.target
+
+[Service]
+ExecStartPre=/bin/mkdir -p /etc/ibrdtn/bpsec /etc/ibrdtn/certs
+ExecStartPre=/bin/chown root:root -R /etc/ibrdtn/bpsec /etc/ibrdtn/certs
+ExecStart=/usr/sbin/dtnd -D -c /etc/ibrdtnd.conf
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

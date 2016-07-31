@@ -1,0 +1,18 @@
+## SECTION=networking
+
+menuconfig DTNDHT
+	tristate
+	prompt "dtndht                        "
+	select OPENSSL if DTNDHT_WITH_OPENSSL
+	help
+	  DTNDHT is a library providing a fully distributed BitTorrent DHT-based
+	  naming service especially for DTN Bundle Protocol EIDs (RFC 5050). 
+
+if DTNDHT
+	config DTNDHT_WITH_OPENSSL
+		bool
+		default y
+		prompt "use OpenSSL instead of built-in crypto"
+endif
+
+# vim: syntax=kconfig

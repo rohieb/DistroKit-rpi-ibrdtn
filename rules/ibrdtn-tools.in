@@ -1,0 +1,44 @@
+## SECTION=networking
+
+menuconfig IBRDTN_TOOLS
+	tristate
+	prompt "ibrdtn-tools                  "
+	select IBRDTND
+	select IBRDTN
+	select LIBDAEMON       if IBRDTN_TOOLS_WITH_LIBDAEMON
+	select LIBARCHIVE      if IBRDTN_TOOLS_WITH_LIBARCHIVE
+	help
+	  IBR-DTN is a lightweight implementation of the Bundle Protocol (RFC
+	  5050), designed for embedded systems like the RouterBoard532A or
+	  Ubiquiti RouterStation Pro.
+
+	  This package contains the tools to work with IBR-DTN:  dtnping,
+	  dtnsend, dtnrecv, dtntracepath, dtnconvert, dtninbox, dtnoutbox,
+	  dtnstream, dtntrigger, and dtntunnel.
+
+if IBRDTN_TOOLS
+
+	config IBRDTN_TOOLS_ENABLE_DEBUG
+		bool
+		default n
+		prompt "enable debug symbols"
+	
+	config IBRDTN_TOOLS_WITH_LIBDAEMON
+		bool
+		default y
+		prompt "build with daemon support"
+		help
+		  If this option is enabled, dtntrigger and dtntunnel will be
+		  able to start as a daemon in the background.
+
+	config IBRDTN_TOOLS_WITH_LIBARCHIVE
+		bool
+		default y
+		prompt "build with libarchive support (dtninbox, dtnoutbox)"
+		help
+		 If this option is deselected, dtninbox and dtnoutbox will not
+		 be built.
+
+endif
+
+# vim: syntax=kconfig

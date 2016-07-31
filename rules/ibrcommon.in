@@ -1,0 +1,39 @@
+## SECTION=networking
+
+menuconfig IBRCOMMON
+	tristate
+	prompt "ibrcommon                     "
+	select LIBXML2 if IBRCOMMON_WITH_XML
+	select LIBNL3  if IBRCOMMON_WITH_LOWPAN
+	select OPENSSL if IBRCOMMON_WITH_OPENSSL
+	help
+	  IBR-DTN is a lightweight implementation of the Bundle Protocol (RFC
+	  5050), designed for embedded systems like the RouterBoard532A or
+	  Ubiquiti RouterStation Pro.
+
+	  This package contains the common library parts which could be of
+	  interest for other software projects.
+
+if IBRCOMMON
+
+	config IBRCOMMON_ENABLE_DEBUG
+		bool
+		default n
+		prompt "enable debug symbols"
+	config IBRCOMMON_WITH_LOWPAN
+		bool
+		default y
+		prompt "enable LoWPAN support"
+
+	config IBRCOMMON_WITH_OPENSSL
+		bool
+		default y
+		prompt "enable OpenSSL support"
+
+	config IBRCOMMON_WITH_XML
+		bool
+		prompt "enable XML support"
+
+endif
+
+# vim: syntax=kconfig

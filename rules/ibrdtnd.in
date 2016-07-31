@@ -1,0 +1,78 @@
+## SECTION=networking
+
+menuconfig IBRDTND
+	tristate
+	prompt "ibrdtnd                       "
+	select IBRDTN
+	select LIBDAEMON              if IBRDTND_ENABLE_DAEMON
+	select DTNDHT                 if IBRDTND_ENABLE_DTNDHT
+	select IBRCOMMON_WITH_OPENSSL if IBRDTND_WITH_TLS
+	select SQLITE                 if IBRDTND_WITH_SQLITE
+	select LIBCURL                if IBRDTND_WITH_LIBCURL
+	# not packaged yet: select WIFIP2P if IBRDTND_WITH_WIFIP2P
+	# not packaged yet: select LIBVMIME if IBRDTND_WITH_VMIME
+	help
+	  IBR-DTN is a lightweight implementation of the Bundle Protocol (RFC
+	  5050), designed for embedded systems like the RouterBoard532A or
+	  Ubiquiti RouterStation Pro.
+
+	  This package contains the daemon which handles all DTN communication.
+
+if IBRDTND
+
+	config IBRDTND_ENABLE_DEBUG
+		bool
+		default n
+		prompt "enable debug symbols"
+
+	config IBRDTND_SYSTEMD_UNIT
+		bool
+		default y
+		depends on INITMETHOD_SYSTEMD
+		prompt "install systemd unit files for the IBR-DTN daemon"
+
+	config IBRDTND_ENABLE_DAEMON
+		bool
+		default y
+		prompt "build with libdaemon support"
+
+	config IBRDTND_ENABLE_DTNDHT
+		bool
+		default y
+		prompt "build with DTNDHT support"
+
+	config IBRDTND_WITH_SQLITE
+		bool
+		default n
+		prompt "build with SQLite storage module"
+
+	config IBRDTND_WITH_TLS
+		bool
+		default n
+		prompt "build with TLS support (Bundle Security Protocol)"
+
+	config IBRDTND_WITH_LIBCURL
+		bool
+		default n
+		prompt "build with libcurl (HTTP Convergence Layer)"
+
+#	Note: wifip2p is not packaged yet
+#	config IBRDTND_WITH_WIFIP2P
+#		bool
+#		default y
+#		prompt "build with wifip2p support"
+#		help
+#		  With wifip2p support, IBR-DTN can use supported Wi-Fi (IEEE
+#		  802.11) devices to connect to other neighbors without the need
+#		  for an additional Wi-Fi access point.
+
+#	Note: libvmime is not packaged yet
+#	config IBRDTND_WITH_VMIME
+#		bool
+#		default n
+#		prompt "build with libvmime (E-Mail Convergence Layer)"
+#		help
+#		  libvmime is needed to build the E-Mail Convergence Layer.
+
+endif
+# vim: syntax=kconfig
