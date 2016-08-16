@@ -1,0 +1,35 @@
+## SECTION=networking
+
+menuconfig IBRDTN
+	tristate
+	prompt "ibrdtn                        "
+	select IBRCOMMON
+	select ZLIB          if IBRDTN_WITH_COMPRESSION
+	select GLIB          if IBRDTN_WITH_GLIB
+	help
+	  IBR-DTN is a lightweight implementation of the Bundle Protocol (RFC
+	  5050), designed for embedded systems like the RouterBoard532A or
+	  Ubiquiti RouterStation Pro.
+
+	  This package contains the shared library used to build applications
+	  with IBR-DTN functionality.
+
+if IBRDTN
+
+	config IBRDTN_ENABLE_DEBUG
+		bool
+		default n
+		prompt "enable debug symbols"
+
+	config IBRDTN_WITH_COMPRESSION
+		bool
+		default y
+		prompt "build with bundle compression support"
+
+	config IBRDTN_WITH_GLIB
+		bool
+		default n
+		prompt "link to glib-2.0 library"
+
+endif
+# vim: syntax=kconfig
